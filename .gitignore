@@ -1,0 +1,26 @@
+# OS-specific
+.DS_Store
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Maven
+target/
+.mvn/
+mvnw
+mvnw.cmd
+
+# Logs
+logs/
+*.log
+
+# Spring Boot
+*.jar
+*.war
+
+# Others
+HELP.md

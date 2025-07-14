@@ -24,3 +24,5 @@ logs/
 
 # Others
 HELP.md
+
+/node_modules

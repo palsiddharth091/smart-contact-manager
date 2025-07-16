@@ -16,7 +16,8 @@ public String about(Model model) {
 }
 
 @GetMapping("/services")
-public String services() {
+public String services(Model model) {
+    model.addAttribute("title", "Services");
     return "root/services/services";
 }
 

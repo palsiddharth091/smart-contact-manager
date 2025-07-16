@@ -19,6 +19,6 @@ public class TestController {
         System.out.println("sid");
         model.addAttribute("name", "Siddharth");
         model.addAttribute("title", "Testing");
-        return "helloTemplate";
+        return "test/helloTemplate";
     }
 }

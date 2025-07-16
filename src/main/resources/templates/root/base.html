@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org" th:fragment="parent(content)"> <!-- It defines a reusable template fragment named parent that accepts a parameter called content. In the context of your base.html file, this means the entire <html> structure is a fragment. Other templates (like your about.html) can use th:replace="~{base :: parent(~{::#content})}" to inherit this layout. When they do, Thymeleaf will inject the content from the child template (the part with id="content") into the <section data-th-replace="${content}"></section> of the base template. This approach enables layout inheritance and content injection, allowing you to maintain a consistent structure across pages while customizing the main content for each page. -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-th-text="${title}">Base Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}">
+</head>
+<body>
+
+<!-- Main Content of the Page Starts here -->
+
+<section data-th-replace="${content}"></section>
+
+<!-- Main Content of the Page Ends here -->
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>
+

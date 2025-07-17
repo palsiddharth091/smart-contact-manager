@@ -16,10 +16,10 @@
     <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
   </head>
   <body>
-    <div data-th-replace="root/navbar :: navbar"></div>
+    <div data-th-insert="~{root/navbar/navbar :: navbar}"></div>
     <!-- Main Content of the Page Starts here -->
 
-    <div class="p-4">
+    <div class="p-4 h-screen w-full">
       <section data-th-replace="${content}"></section>
     </div>
 

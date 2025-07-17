@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{root/base :: parent(~{::#content})}">
+<html lang="en" th:replace="~{root/base :: parent(~{::#content},~{::script})}">
 <body>
     <div id="content">
         <h1>Welcome to Services Page</h1>
+        <h2>Services offered by SCM</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum sequi at consectetur vero accusamus ab, modi maxime praesentium eaque quos non adipisci, culpa, optio enim nemo qui nostrum eius? Nostrum.</p>
     </div>
+    <script>
+        console.log("Services")
+    </script>
 </body>
 </html>
+

@@ -4,9 +4,13 @@ module.exports = {
     './src/main/resources/templates/**/*.html',
     './src/input.css',
   ],
-  theme: {
-    extend: {},
-  },
+ theme: {
+      extend: {
+        colors: {
+          'custom-blue':'#101827',
+        }
+      },
+    },  
   plugins: [],
   darkMode: 'selector'
 }

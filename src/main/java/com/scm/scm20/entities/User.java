@@ -12,6 +12,8 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -33,8 +35,9 @@ import io.micrometer.common.lang.NonNull;
 public class User {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
     private String name;
     @Column(nullable = false, unique = true)
     private String email;
@@ -60,8 +63,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Convert(converter = ProviderConverter.class) // When reading from the database, if the value is not a valid enum, it will not throw an exception. Instead, it will map to PROVIDER.SELF (or null, or any default you choose).
     private PROVIDER provider; // To check how did the user sign up like Self, Google, Facebook etc. 
-    @Column(name="provider_user_id")
-    private String providerUserId;
 
     // Mapping one user to multiple contacts
     // The code establishes a one-to-many relationship between the User and `Contact` entities using JPA/Hibernate. Through the `@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)` annotation, a user can be associated with multiple contacts. The `mappedBy = "user"` parameter specifies that the `Contact` entity contains a `user` field that manages this relationship. `cascade = CascadeType.ALL` propagates all operations (like saving or deleting) from a User to their associated contacts. `fetch = FetchType.LAZY` when we fetch a user only user object is loaded and a proxy object of the contact class will be sent. It will fetch the contacts only when we hit a method something like that. `orphanRemoval = true` Automatically deletes contacts when the user is deleted.

@@ -1,7 +1,15 @@
 package com.scm.scm20.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,10 +24,12 @@ import lombok.Setter;
 public class Contact {
     
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contact_id")
+    private Long contactId;
     private String name;
     private String email;
-    @Column(name="phone_number")
+    @Column(name="phone_number", length = 10)
     private String phoneNumber;
     private String address;
     private String picture;
@@ -27,9 +37,7 @@ public class Contact {
     private boolean favorite = false;
     
     // This is to store social media handles
-    @Column(name="website_link")
-    private String websiteLink;
-
-    // This is to map the contact to the user. 
-    private User user;
+    @Column(name="social_media")
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    List<SocialLink> socials = new ArrayList<>();
 }

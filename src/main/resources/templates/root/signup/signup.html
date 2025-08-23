@@ -1,8 +1,132 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{root/base :: parent(~{::#content},~{})}">
-<body>
+  <body>
     <div id="content">
-        <h1>Welcome to Signup Page</h1>
+      <div class="grid grid-cols-12">
+        <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+          <div
+            href="#"
+            class="block p-6 border-t-8 border-blue-700 bg-white rounded-lg shadow hover:bg-gray-100"
+          >
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-500 text-blackf"
+            >
+              Signup Here
+            </h5>
+            <p class="font-normal text-gray-700 dark:text-gray-400">
+              Here are the biggest enterprise technology acquisitions of 2021 so
+              far, in reverse chronological order.
+            </p>
+            <div class="registration-panel">
+              <!-- data-th-action mentions the URL in which the data should be posted. -->
+              <!-- data-th-object="${userForm}" is to import the object from the signup controller -->
+              <form data-th-action="@{/register}" method="post" data-th-object="${userForm}">
+                <!-- Email Field -->
+                <div class="mt-3 email">
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Email"
+                    data-th-field="*{email}"
+                    required
+                  />
+                </div>
+                <!-- User Name field -->
+                <div class="mt-3 username">
+                  <label
+                    for="user-name"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Username</label
+                  >
+                  <input
+                    type="text"
+                    id="user-name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Username"
+                    data-th-field="*{userName}"
+                    required
+                  />
+                </div>
+                <!-- Password field -->
+                <div class="mt-3 password">
+                  <label
+                    for="password"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    id="password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Password"
+                    data-th-field="*{password}"
+                    required
+                  />
+                </div>
+                <!-- Confirm Password field -->
+                <div class="mt-3 confirm-password">
+                  <label
+                    for="confirm-password"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Confirm Password</label
+                  >
+                  <input
+                    type="password"
+                    id="confirm-password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Confirm Your Password"
+                    data-th-field="*{confirmPassword}"
+                    required
+                  />
+                </div>
+                <!-- Phone Number field -->
+                <div class="mt-3 phonenumber">
+                  <label
+                    for="phone-number"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="text"
+                    id="phone-number"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Phone Number"
+                    data-th-field="*{phoneNumber}"
+                    required
+                  />
+                </div>
+                <!-- About field -->
+                <div class="mt-3 about">
+                  <label
+                    for="about"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >About</label
+                  >
+                  <textarea
+                    type="text"
+                    id="about"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Bio"
+                    data-th-field="*{about}"
+                    required
+                  ></textarea>
+                </div>
+                <div class="button-group mt-3 flex justify-center space-x-3">
+                  <button class="px-3 py-2 rounded bg-blue-800 text-white" type="submit">Register</button>
+                  <button class="px-3 py-2 rounded bg-orange-800 text-white" type="reset">Reset</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

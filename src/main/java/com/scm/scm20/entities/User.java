@@ -21,6 +21,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import com.scm.scm20.constants.PROVIDER;
 import com.scm.scm20.converter.ProviderConverter;
@@ -31,6 +32,7 @@ import io.micrometer.common.lang.NonNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 public class User {
     
@@ -38,6 +40,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
+    @Column(name = "user_name",length = 20)
+    private String username;
     private String name;
     @Column(nullable = false, unique = true)
     private String email;

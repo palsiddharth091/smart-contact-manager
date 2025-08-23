@@ -3,6 +3,12 @@ package com.scm.scm20.controller.main;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.scm.scm20.forms.UserForm;
+
 
 @Controller
 public class PageController {
@@ -45,15 +51,25 @@ public class PageController {
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("title", "Register");
+        UserForm userform = new UserForm();
+        model.addAttribute("userForm", userform);
         return "root/signup/signup";
     }
 
-        // Home Page
+    // Login Page 
 
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("title", "Login");
         return "root/login/login";
+    }
+
+    // URL to Register User
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute UserForm userForm) {
+        System.out.println(userForm.toString());
+        return "redirect:/signup"; // Redirect to the URL 
     }
 
 }

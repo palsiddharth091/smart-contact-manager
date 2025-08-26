@@ -22,6 +22,22 @@
               <!-- data-th-action mentions the URL in which the data should be posted. -->
               <!-- data-th-object="${userForm}" is to import the object from the signup controller -->
               <form data-th-action="@{/register}" method="post" data-th-object="${userForm}">
+                <!-- Name Field -->
+                <div class="mt-3 name">
+                  <label
+                    for="name"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your name"
+                    data-th-field="*{name}"
+                    required
+                  />
+                </div>
                 <!-- Email Field -->
                 <div class="mt-3 email">
                   <label

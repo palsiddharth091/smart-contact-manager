@@ -1,4 +1,4 @@
 /**
- * This package is to store all controller classes
+ * This package is to store all controller classes and write validation logic of request or response
  */
 package com.scm.scm20.controller;

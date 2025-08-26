@@ -1,17 +1,24 @@
-package com.scm.scm20.controller.main;
+package com.scm.scm20.controller.root;
 
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import com.scm.scm20.constants.PROVIDER;
+import com.scm.scm20.entities.User;
 import com.scm.scm20.forms.UserForm;
-
+import com.scm.scm20.service.UserService;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    UserService userService;
 
     // About Page
 
@@ -20,7 +27,6 @@ public class PageController {
         model.addAttribute("title", "About");
         return "root/about/about";
     }
-
 
     // Services Page
 
@@ -56,7 +62,7 @@ public class PageController {
         return "root/signup/signup";
     }
 
-    // Login Page 
+    // Login Page
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -69,7 +75,21 @@ public class PageController {
     @PostMapping("/register")
     public String register(@ModelAttribute UserForm userForm) {
         System.out.println(userForm.toString());
-        return "redirect:/signup"; // Redirect to the URL 
+
+        User user = User.builder()
+        .name(userForm.getName())
+        .email(userForm.getEmail())
+        .password(userForm.getPassword())
+        .about(userForm.getAbout())
+        .phoneNumber(userForm.getPhoneNumber())
+        .profilePicture("hello") // TODO: Make it soft coded
+        .userName(userForm.getUserName())
+        .provider(PROVIDER.SELF) // TODO: Make it dynamic depending upon SSO or something else
+        .build();
+        // Validate data
+        User savUser = userService.saveUser(user);
+        System.out.println(savUser);
+        return "redirect:/signup"; // Redirect to the URL
     }
 
 }

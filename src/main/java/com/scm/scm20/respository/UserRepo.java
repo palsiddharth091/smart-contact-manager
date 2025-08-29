@@ -15,8 +15,7 @@ import com.scm.scm20.entities.User;
  * 2. Custom Query Methods
  * 3. Custom Finder Methods
  */
-// TODO : Add Is deleted column condition in find methods and update methods
-// Todo: add method for login
+// TODO: add method for login
 @Repository
 public interface UserRepo extends JpaRepository<User,Long> {
     User findByUserName(String userName);

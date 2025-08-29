@@ -1,6 +1,5 @@
 package com.scm.scm20.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.scm.scm20.entities.User;

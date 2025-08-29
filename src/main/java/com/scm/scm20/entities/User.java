@@ -57,14 +57,15 @@ public class User {
     @ColumnDefault("false")
     private boolean enabled; // Check if the user is enabled or not
     @Column(name = "email_verified", columnDefinition = "default false")
-    private boolean emailVerified; // Check if the email is verfifed or not
+    private boolean emailVerified; // Check if the email is verified or not
     @Column(name = "phone_verified", columnDefinition = "default false")
-    private boolean phoneVerified; // Check if the phone is verfifed or not
+    private boolean phoneVerified; // Check if the phone is verified or not
     
     @Column(name = "is_deleted", columnDefinition = "default false")
     private boolean isDeleted;
 
     @NonNull
+    @Builder.Default // This will ensure that when an object is being built, it's default value will not get overidden.
     @Column(columnDefinition = "ENUM('SELF','GOOGLE','FACEBOOK')")
     @ColumnDefault("'SELF'")
     @Enumerated(EnumType.STRING)
@@ -74,6 +75,7 @@ public class User {
     // Mapping one user to multiple contacts
     // The code establishes a one-to-many relationship between the User and `Contact` entities using JPA/Hibernate. Through the `@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)` annotation, a user can be associated with multiple contacts. The `mappedBy = "user"` parameter specifies that the `Contact` entity contains a `user` field that manages this relationship. `cascade = CascadeType.ALL` propagates all operations (like saving or deleting) from a User to their associated contacts. `fetch = FetchType.LAZY` when we fetch a user only user object is loaded and a proxy object of the contact class will be sent. It will fetch the contacts only when we hit a method something like that. `orphanRemoval = true` Automatically deletes contacts when the user is deleted.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Builder.Default
     List<Contact> contacts = new ArrayList<>();
 
 

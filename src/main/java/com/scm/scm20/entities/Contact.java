@@ -40,11 +40,13 @@ public class Contact {
     private String address;
     private String picture;
     private String description;
+    @Builder.Default
     private boolean favorite = false;
 
     // This is to store social media handles
     @Column(name = "social_media")
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Builder.Default
     List<SocialLink> socials = new ArrayList<>();
 
     @ManyToOne

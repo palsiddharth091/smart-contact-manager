@@ -1,21 +1,30 @@
 package com.scm.scm20.controller.root;
 
-import java.util.UUID;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.scm.scm20.constants.Messages;
 import com.scm.scm20.constants.PROVIDER;
 import com.scm.scm20.entities.User;
+import com.scm.scm20.entities.helper.Alert;
+import com.scm.scm20.entities.helper.Severity;
 import com.scm.scm20.forms.UserForm;
 import com.scm.scm20.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 
 @Controller
 public class PageController {
+
+     private static final Logger LOGGER = LoggerFactory.getLogger(PageController.class);
 
     @Autowired
     UserService userService;
@@ -52,7 +61,7 @@ public class PageController {
         return "root/contact/contact";
     }
 
-    // Home Page
+    // Method to render Signup Page
 
     @GetMapping("/signup")
     public String signup(Model model) {
@@ -70,11 +79,19 @@ public class PageController {
         return "root/login/login";
     }
 
-    // URL to Register User
+    // URL to Register User once the user has entered all the details. Redirection is happening from signup.html. Check the form attribute.
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UserForm userForm) {
-        System.out.println(userForm.toString());
+    public String register(@Valid @ModelAttribute UserForm userForm ,BindingResult bindingResult ,HttpSession session) {
+        LOGGER.info(userForm.toString());
+        if(bindingResult.hasErrors()){
+            return "root/signup/signup"; // Redirect to the URL
+        }
+
+        Alert alert = new Alert();
+        if(!userForm.getPassword().equals(userForm.getConfirmPassword())){
+            // Alert.builder().content(Messages.PASSWORD_MISMATCH).severity(Severity.yellow).build(); // TODO: Handle Password Mismatch
+        }
 
         User user = User.builder()
         .name(userForm.getName())
@@ -85,10 +102,17 @@ public class PageController {
         .profilePicture("hello") // TODO: Make it soft coded
         .userName(userForm.getUserName())
         .provider(PROVIDER.SELF) // TODO: Make it dynamic depending upon SSO or something else
-        .build();
-        // Validate data
-        User savUser = userService.saveUser(user);
-        System.out.println(savUser);
+        .build(); 
+        try {
+            User savedUser = userService.saveUser(user);
+            LOGGER.info("Saved User : "+savedUser.toString());
+            alert = Alert.builder().content(Messages.REGISTRACTION_SUCCESSFUL).severity(Severity.green).build();
+            LOGGER.info("User Saved Successfully");
+        } catch (Exception e) {
+            alert = Alert.builder().content(e.getMessage()).severity(Severity.red).build();
+            LOGGER.error(e.getMessage());
+        }
+        session.setAttribute("alert", alert);
         return "redirect:/signup"; // Redirect to the URL
     }
 

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en" th:replace="~{root/base :: parent(~{::#content},~{})}">
   <body>
@@ -7,8 +9,9 @@
         <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
           <div
             href="#"
-            class="block p-6 border-t-8 border-blue-700 bg-white rounded-lg shadow hover:bg-gray-100"
+            class="block p-6 border-t-8 border-blue-700 bg-white rounded-lg shadow"
           >
+            <div data-th-replace="~{root/signup/alert::messagebox}"></div>
             <h5
               class="mb-2 text-2xl font-bold tracking-tight text-gray-500 text-blackf"
             >
@@ -21,7 +24,12 @@
             <div class="registration-panel">
               <!-- data-th-action mentions the URL in which the data should be posted. -->
               <!-- data-th-object="${userForm}" is to import the object from the signup controller -->
-              <form data-th-action="@{/register}" method="post" data-th-object="${userForm}">
+              <form
+                data-th-action="@{/register}"
+                method="post"
+                th:object="${userForm}"
+                novalidate
+              >
                 <!-- Name Field -->
                 <div class="mt-3 name">
                   <label
@@ -34,9 +42,14 @@
                     id="name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Your name"
-                    data-th-field="*{name}"
+                    th:field="*{name}"
                     required
                   />
+                  <p
+                    data-th-if="${#fields.hasErrors('name')}"
+                    data-th-errors="*{name}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <!-- Email Field -->
                 <div class="mt-3 email">
@@ -50,9 +63,14 @@
                     id="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Your Email"
-                    data-th-field="*{email}"
+                    th:field="*{email}"
                     required
                   />
+                  <p
+                    data-th-if="${#fields.hasErrors('email')}"
+                    data-th-errors="*{email}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <!-- User Name field -->
                 <div class="mt-3 username">
@@ -66,9 +84,14 @@
                     id="user-name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Your Username"
-                    data-th-field="*{userName}"
+                    th:field="*{userName}"
                     required
                   />
+                  <p
+                    data-th-if="${#fields.hasErrors('userName')}"
+                    data-th-errors="*{userName}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <!-- Password field -->
                 <div class="mt-3 password">
@@ -82,9 +105,14 @@
                     id="password"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Your Password"
-                    data-th-field="*{password}"
+                    th:field="*{password}"
                     required
                   />
+                  <p
+                    data-th-if="${#fields.hasErrors('password')}"
+                    data-th-errors="*{password}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <!-- Confirm Password field -->
                 <div class="mt-3 confirm-password">
@@ -98,9 +126,14 @@
                     id="confirm-password"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Confirm Your Password"
-                    data-th-field="*{confirmPassword}"
+                    th:field="*{confirmPassword}"
                     required
                   />
+                  <p
+                    data-th-if="${#fields.hasErrors('confirmPassword')}"
+                    data-th-errors="*{confirmPassword}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <!-- Phone Number field -->
                 <div class="mt-3 phonenumber">
@@ -114,9 +147,14 @@
                     id="phone-number"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Your Phone Number"
-                    data-th-field="*{phoneNumber}"
+                    th:field="*{phoneNumber}"
                     required
                   />
+                  <p
+                    data-th-if="${#fields.hasErrors('phoneNumber')}"
+                    data-th-errors="*{phoneNumber}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <!-- About field -->
                 <div class="mt-3 about">
@@ -130,13 +168,28 @@
                     id="about"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Your Bio"
-                    data-th-field="*{about}"
+                    th:field="*{about}"
                     required
                   ></textarea>
+                  <p
+                    data-th-if="${#fields.hasErrors('about')}"
+                    data-th-errors="*{about}"
+                    class="text-red-600 px-1 py-2"
+                  ></p>
                 </div>
                 <div class="button-group mt-3 flex justify-center space-x-3">
-                  <button class="px-3 py-2 rounded bg-blue-800 text-white" type="submit">Register</button>
-                  <button class="px-3 py-2 rounded bg-orange-800 text-white" type="reset">Reset</button>
+                  <button
+                    class="px-3 py-2 rounded bg-blue-800 text-white"
+                    type="submit"
+                  >
+                    Register
+                  </button>
+                  <button
+                    class="px-3 py-2 rounded bg-orange-800 text-white"
+                    type="reset"
+                  >
+                    Reset
+                  </button>
                 </div>
               </form>
             </div>

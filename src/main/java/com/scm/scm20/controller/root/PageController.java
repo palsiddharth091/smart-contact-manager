@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.scm.scm20.constants.Common;
 import com.scm.scm20.constants.Messages;
 import com.scm.scm20.constants.PROVIDER;
 import com.scm.scm20.entities.User;
@@ -29,12 +30,18 @@ public class PageController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/")
+    public String index() {
+        return Common.ROOT+"home";
+    }
+    
+
     // About Page
 
     @GetMapping("/about")
     public String about(Model model) {
         model.addAttribute("title", "About");
-        return "root/about/about";
+        return Common.ROOT+"about/about";
     }
 
     // Services Page
@@ -42,7 +49,7 @@ public class PageController {
     @GetMapping("/services")
     public String services(Model model) {
         model.addAttribute("title", "Services");
-        return "root/services/services";
+        return Common.ROOT+"services/services";
     }
 
     // Home Page
@@ -50,7 +57,7 @@ public class PageController {
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("title", "Home");
-        return "root/home";
+        return Common.ROOT+"home";
     }
 
     // Contact Page
@@ -58,7 +65,7 @@ public class PageController {
     @GetMapping("/contact")
     public String contact(Model model) {
         model.addAttribute("title", "Contact");
-        return "root/contact/contact";
+        return Common.ROOT+"contact/contact";
     }
 
     // Method to render Signup Page
@@ -68,7 +75,7 @@ public class PageController {
         model.addAttribute("title", "Register");
         UserForm userform = new UserForm();
         model.addAttribute("userForm", userform);
-        return "root/signup/signup";
+        return Common.ROOT+"signup/signup";
     }
 
     // Login Page
@@ -76,7 +83,7 @@ public class PageController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("title", "Login");
-        return "root/login/login";
+        return Common.ROOT+"login/login";
     }
 
     // URL to Register User once the user has entered all the details. Redirection is happening from signup.html. Check the form attribute.
@@ -85,7 +92,7 @@ public class PageController {
     public String register(@Valid @ModelAttribute UserForm userForm ,BindingResult bindingResult ,HttpSession session) {
         LOGGER.info(userForm.toString());
         if(bindingResult.hasErrors()){
-            return "root/signup/signup"; // Redirect to the URL
+            return Common.ROOT+"signup/signup"; // Redirect to the URL
         }
 
         Alert alert = new Alert();

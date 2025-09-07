@@ -1,8 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{root/base :: parent(~{::#content},~{})}">
-<body>
-    <div id="content" dark:bg-custom-blue>
-        <h1>Welcome to Login Page</h1>
+  <body>
+    <div id="content">
+      <div class="grid grid-cols-12">
+        <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+          <div
+            href="#"
+            class="block p-6 border-t-8 border-green-700 bg-white rounded-lg shadow"
+          >
+            <div data-th-replace="~{root/signup/alert::messagebox}"></div>
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-black"
+            >
+              Login Here
+            </h5>
+            <p class="font-normal text-black">
+              Start Managing contacts on cloud...
+            </p>
+            <div class="registration-panel">
+             <div th:if="${param.error}" class="text-center text-red-700">Invalid username and password.</div>
+             <div th:if="${param.logout}" class="text-center text-green-700">You have been logged out.</div>
+              <form novalidate 
+              method="post"
+              data-th-action="@{'/authenticate'}"
+              class="mt-5"
+              >
+                <!-- User Name field -->
+                <div class="mt-3 username">
+                  <label
+                    for="user-name"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Username</label
+                  >
+                  <input
+                    type="text"
+                    id="user-name"
+                    name="username"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Username"
+                    required
+                  />
+                  <!-- <p
+                    data-th-if="${#fields.hasErrors('userName')}"
+                    data-th-errors="*{userName}"
+                    class="text-red-600 px-1 py-2"
+                  ></p> -->
+                </div>
+                <!-- Password field -->
+                <div class="mt-3 password">
+                  <label
+                    for="password"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Your Password"
+                    required
+                  />
+                </div>
+                <div class="button-group mt-3 flex justify-center space-x-3">
+                  <button
+                    class="px-3 py-2 rounded bg-blue-800 text-white"
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                  <button
+                    class="px-3 py-2 rounded bg-orange-800 text-white"
+                    type="reset"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

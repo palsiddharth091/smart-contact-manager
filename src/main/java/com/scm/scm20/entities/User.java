@@ -1,13 +1,19 @@
 package com.scm.scm20.entities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,6 +21,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +42,7 @@ import io.micrometer.common.lang.NonNull;
 @ToString
 @Builder
 @Entity
-public class User {
+public class User implements UserDetails { // User class must be an instance of UserDetails so that it can be used in spring security. 
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +84,28 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     List<Contact> contacts = new ArrayList<>();
+
+ // TODO : Create user_role_list table. 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roleList = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // List of Roles [USER,ADMIN]
+        // Collection of SimpleGrantedAuthority
+        Collection<SimpleGrantedAuthority> roles = roleList.stream().map(role-> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+       return this.userName;
+    }
+
+    // TODO: Create fields for isAccountNonExpired
+    // TODO: isAccountNonLocked
+    // TODO: isCredentialsNonExpired
+    // TODO: isEnabled 
 
 
 }

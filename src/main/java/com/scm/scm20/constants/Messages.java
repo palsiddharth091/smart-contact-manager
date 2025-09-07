@@ -30,4 +30,6 @@ public class Messages {
 
     public static final String REGISTRACTION_SUCCESSFUL = "Boom! You're now in the network. Time to start filling that contacts list";
 
+    public static final String USER_NOT_FOUND_WITH_USERNAME = "User not found with the username";
+
 }

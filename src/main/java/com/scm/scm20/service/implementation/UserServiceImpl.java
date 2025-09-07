@@ -1,11 +1,15 @@
 package com.scm.scm20.service.implementation;
 
+import java.util.List;
 import java.util.Optional;
+
+import com.scm.scm20.constants.Common;
 import com.scm.scm20.constants.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scm.scm20.entities.User;
@@ -23,7 +27,9 @@ public class UserServiceImpl implements UserService {
     
     // Injecting beans of UserRepo
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     String[] ignoredProperties = {};
 
     @Override
@@ -48,6 +54,8 @@ public class UserServiceImpl implements UserService {
         } catch (ResourceNotFoundException e) {
             throw new ResourceNotFoundException(e.getMessage());
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoleList(List.of(Common.USER_ROLE));
         return userRepo.save(user);
     }
 
@@ -71,7 +79,7 @@ public class UserServiceImpl implements UserService {
             return alreadyPresent;
         }
 
-        alreadyPresent = userRepo.findByUserName(user.getUserName());
+        alreadyPresent = userRepo.findByUserName(user.getUsername());
         if (alreadyPresent != null) {
             LOGGER.info(Messages.USER_ALREADY_EXISTS_BY_USERNAME);
             if (!find) throw new ResourceNotFoundException(Messages.USER_ALREADY_EXISTS_BY_USERNAME);
@@ -96,7 +104,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public boolean deleteUser(User user) {
-        boolean result = userRepo.deleteUser(user.getUserName(), user.getEmail(), user.getPhoneNumber());
+        boolean result = userRepo.deleteUser(user.getUsername(), user.getEmail(), user.getPhoneNumber());
         if(!result) throw new ResourceNotFoundException(Messages.ERROR_IN_DELETING);
         return result;
     }

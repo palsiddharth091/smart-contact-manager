@@ -5,7 +5,11 @@ import jakarta.persistence.Converter;
 import com.scm.scm20.constants.PROVIDER;
 
 
-// To handle unknown enum values gracefully in JPA/Hibernate (for example, mapping them to a default or null instead of throwing an exception), you can use a custom attribute converter.
+/**
+ * To handle unknown enum values gracefully in JPA/Hibernate (for example,
+ * mapping them to a default or null instead of throwing an exception), you can
+ * use a custom attribute converter.
+ */ 
 @Converter(autoApply = true)
 public class ProviderConverter implements AttributeConverter<PROVIDER, String> {
 
